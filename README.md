@@ -1,5 +1,52 @@
 # go-sequencer-client
 
+### Usage
+```go
+package main
+
+import (
+    "github.com/astriaorg/go-sequencer-client"
+    sqproto "github.com/astriaorg/go-sequencer-client/proto"
+)
+
+func main() {
+    signer, err := client.GenerateSigner()
+	if err != nil {
+        panic(err)
+    }
+
+    // default tendermint RPC endpoint
+	c, err := NewClient("http://localhost:26657")
+	if err != nil {
+        panic(err)
+    }
+
+	tx := &sqproto.UnsignedTransaction{
+		Nonce: 1,
+		Actions: []*sqproto.Action{
+			{
+				Value: &sqproto.Action_SequenceAction{
+					SequenceAction: &sqproto.SequenceAction{
+						ChainId: []byte("test-chain"),
+						Data:    []byte("test-data"),
+					},
+				},
+			},
+		},
+	}
+
+	signed, err := signer.SignTransaction(tx)
+	if err != nil {
+        panic(err)
+    }
+
+	resp, err := c.BroadcastTxSync(context.Background(), signed)
+	if err != nil {
+        panic(err)
+    }
+
+    fmt.Println(resp)
+}
 
 ### Generating Go files from protos
 

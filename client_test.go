@@ -36,5 +36,4 @@ func TestSignAndBroadcastTx(t *testing.T) {
 	resp, err := client.BroadcastTxSync(context.Background(), signed)
 	require.NoError(t, err)
 	require.Equal(t, resp.Code, uint32(0), resp.Log)
-	t.Log(resp)
 }
