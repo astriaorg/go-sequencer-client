@@ -7,6 +7,8 @@ import (
 	coretypes "github.com/cometbft/cometbft/rpc/core/types"
 	proto "google.golang.org/protobuf/proto"
 
+	//protodelim "github.com/protocolbuffers/protobuf-go/encoding/protodelim"
+
 	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 
