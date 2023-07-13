@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// default tendermint RPC endpoint
-	c, err := NewClient("http://localhost:26657")
+	c, err := client.NewClient("http://localhost:26657")
 	if err != nil {
 		panic(err)
 	}
