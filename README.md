@@ -5,21 +5,24 @@
 package main
 
 import (
-    "github.com/astriaorg/go-sequencer-client"
-    sqproto "github.com/astriaorg/go-sequencer-client/proto"
+	"context"
+	"fmt"
+
+	client "github.com/astriaorg/go-sequencer-client"
+	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 
 func main() {
-    signer, err := client.GenerateSigner()
+	signer, err := client.GenerateSigner()
 	if err != nil {
-        panic(err)
-    }
+		panic(err)
+	}
 
-    // default tendermint RPC endpoint
+	// default tendermint RPC endpoint
 	c, err := NewClient("http://localhost:26657")
 	if err != nil {
-        panic(err)
-    }
+		panic(err)
+	}
 
 	tx := &sqproto.UnsignedTransaction{
 		Nonce: 1,
@@ -37,16 +40,17 @@ func main() {
 
 	signed, err := signer.SignTransaction(tx)
 	if err != nil {
-        panic(err)
-    }
+		panic(err)
+	}
 
 	resp, err := c.BroadcastTxSync(context.Background(), signed)
 	if err != nil {
-        panic(err)
-    }
+		panic(err)
+	}
 
-    fmt.Println(resp)
+	fmt.Println(resp)
 }
+```
 
 ### Generating Go files from protos
 
