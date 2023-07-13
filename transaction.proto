@@ -1,12 +1,14 @@
 // generate go files with:
-// go install github.com/gogo/protobuf/protoc-gen-gofast
-// protoc --gofast_out=. transaction.proto -I=.
+// go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+// protoc -I=. --go_out=. types.proto transaction.proto
 
 syntax = "proto3";
 
 package client;
 
 import "types.proto";
+
+option go_package = "github.com/astriaorg/go-sequencer-client";
 
 // `SignedTransaction` is a transaction that has
 // been signed by the given public key.
@@ -39,7 +41,7 @@ message Action {
 // be considered invalid by the sequencer.
 message TransferAction {
     bytes to = 1;
-    astria.primitive.v1.Uint128 amount = 2;
+    client.Uint128 amount = 2;
 }
 
 // `SequenceAction` represents a transaction destined for another

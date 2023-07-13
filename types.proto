@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package client;
 
+option go_package = "github.com/astriaorg/go-sequencer-client";
+
 // A 128 bit unsigned integer encoded in protobuf.,
 //
 // Protobuf does not support integers larger than 64 bits,
