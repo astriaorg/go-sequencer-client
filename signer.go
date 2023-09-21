@@ -12,6 +12,12 @@ type Signer struct {
 	private ed25519.PrivateKey
 }
 
+func NewSigner(private ed25519.PrivateKey) *Signer {
+	return &Signer{
+		private: private,
+	}
+}
+
 func GenerateSigner() (*Signer, error) {
 	_, priv, err := ed25519.GenerateKey(nil)
 	if err != nil {
@@ -29,11 +35,21 @@ func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.Sign
 		return nil, err
 	}
 
-	msg := sha256.Sum256(bytes)
-	sig := ed25519.Sign(s.private, msg[:])
+	sig := ed25519.Sign(s.private, bytes)
 	return &sqproto.SignedTransaction{
 		Transaction: tx,
 		Signature:   sig,
 		PublicKey:   s.private.Public().(ed25519.PublicKey),
 	}, nil
+}
+
+func (s *Signer) PublicKey() ed25519.PublicKey {
+	return s.private.Public().(ed25519.PublicKey)
+}
+
+func (s *Signer) Address() [20]byte {
+	hash := sha256.Sum256(s.PublicKey())
+	var addr [20]byte
+	copy(addr[:], hash[:20])
+	return addr
 }

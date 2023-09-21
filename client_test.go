@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"math/big"
 	"testing"
 
 	sqproto "github.com/astriaorg/go-sequencer-client/proto"
@@ -36,4 +37,22 @@ func TestSignAndBroadcastTx(t *testing.T) {
 	resp, err := client.BroadcastTxSync(context.Background(), signed)
 	require.NoError(t, err)
 	require.Equal(t, resp.Code, uint32(0), resp.Log)
+}
+
+func TestGetBalance(t *testing.T) {
+	client, err := NewClient("http://localhost:26657")
+	require.NoError(t, err)
+
+	balance, err := client.GetBalance(context.Background(), [20]byte{})
+	require.NoError(t, err)
+	require.Equal(t, balance, big.NewInt(0))
+}
+
+func TestGetNonce(t *testing.T) {
+	client, err := NewClient("http://localhost:26657")
+	require.NoError(t, err)
+
+	nonce, err := client.GetNonce(context.Background(), [20]byte{})
+	require.NoError(t, err)
+	require.Equal(t, nonce, uint32(0))
 }
