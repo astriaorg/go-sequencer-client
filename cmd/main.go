@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"encoding/hex"
 	"fmt"
 	"os"
@@ -19,6 +20,8 @@ func Execute() {
 
 	case "createaccount":
 		handleCreateAccount()
+	case "getbalance":
+		handleGetBalance()
 	default:
 		printHelp()
 		os.Exit(1)
@@ -30,6 +33,7 @@ func printHelp() {
 	fmt.Println("Usage: go-sequencer-client-cli <command>")
 	fmt.Println("Available commands are:")
 	fmt.Println("  createaccount: creates an account")
+	fmt.Println("  getbalance <:    gets the balance of an account")
 	os.Exit(1)
 }
 
@@ -47,5 +51,39 @@ func handleCreateAccount() {
 	fmt.Println("  Private Key:", hex.EncodeToString(privateKey.Seed()))
 	fmt.Println("  Public Key: ", hex.EncodeToString(signer.PublicKey()))
 	fmt.Println("  Address:    ", hex.EncodeToString(address[:]))
+	os.Exit(0)
+}
+
+func handleGetBalance() {
+	if len(os.Args) < 4 {
+		fmt.Println("Expected an endpoint and address.")
+		printHelp()
+		os.Exit(1)
+	}
+
+	endpoint := os.Args[2]
+
+	address, err := hex.DecodeString(os.Args[3])
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	client, err := client.NewClient(endpoint)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	var address20 [20]byte
+	copy(address20[:], address)
+
+	balance, err := client.GetBalance(context.Background(), address20)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	fmt.Println("Balance:", balance)
 	os.Exit(0)
 }
