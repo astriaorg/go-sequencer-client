@@ -10,8 +10,8 @@ import (
 
 func Execute() {
 	if len(os.Args) < 2 {
-		fmt.Println("Expected a command. Available commands are:")
-		fmt.Println("  createaccount: creates an account")
+		fmt.Println("Expected a command.")
+		printHelp()
 		os.Exit(1)
 	}
 
@@ -20,10 +20,17 @@ func Execute() {
 	case "createaccount":
 		handleCreateAccount()
 	default:
-		fmt.Println("expected a subcommand")
+		printHelp()
 		os.Exit(1)
 	}
 
+}
+
+func printHelp() {
+	fmt.Println("Usage: go-sequencer-client-cli <command>")
+	fmt.Println("Available commands are:")
+	fmt.Println("  createaccount: creates an account")
+	os.Exit(1)
 }
 
 func handleCreateAccount() {
@@ -37,7 +44,6 @@ func handleCreateAccount() {
 	signer := client.NewSigner(privateKey)
 	address := signer.Address()
 	fmt.Println("Created account:")
-	// FIXME - this isn't the usable form of the private key. fails when used in ./seq-faucet
 	fmt.Println("  Private Key:", hex.EncodeToString(privateKey.Seed()))
 	fmt.Println("  Public Key: ", hex.EncodeToString(signer.PublicKey()))
 	fmt.Println("  Address:    ", hex.EncodeToString(address[:]))
