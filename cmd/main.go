@@ -33,9 +33,11 @@ func handleCreateAccount() {
 		os.Exit(1)
 	}
 
+	// NOTE - creating a Signer to easily get public key and address
 	signer := client.NewSigner(privateKey)
 	address := signer.Address()
 	fmt.Println("Created account:")
+	// FIXME - this isn't the usable form of the private key. fails when used in ./seq-faucet
 	fmt.Println("  Private Key:", hex.EncodeToString(privateKey))
 	fmt.Println("  Public Key: ", hex.EncodeToString(signer.PublicKey()))
 	fmt.Println("  Address:    ", hex.EncodeToString(address[:]))
