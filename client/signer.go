@@ -12,6 +12,15 @@ type Signer struct {
 	private ed25519.PrivateKey
 }
 
+func NewAccount() (ed25519.PrivateKey, error) {
+	_, priv, err := ed25519.GenerateKey(nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return priv, nil
+}
+
 func NewSigner(private ed25519.PrivateKey) *Signer {
 	return &Signer{
 		private: private,
