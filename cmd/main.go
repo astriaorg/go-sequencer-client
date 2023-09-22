@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	client "github.com/astriaorg/go-sequencer-client/client"
+	"github.com/astriaorg/go-sequencer-client/client"
 )
 
 func Execute() {
