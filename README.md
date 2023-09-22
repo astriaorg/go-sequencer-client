@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	client "github.com/astriaorg/go-sequencer-client"
+	client "github.com/astriaorg/go-sequencer-client/client"
 	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 

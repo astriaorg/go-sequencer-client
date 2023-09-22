@@ -18,7 +18,6 @@ func Execute() {
 	}
 
 	switch os.Args[1] {
-
 	case "createaccount":
 		handleCreateAccount()
 	case "getbalance":
