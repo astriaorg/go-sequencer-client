@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/astriaorg/go-sequencer-client/client"
 )
 
-func Execute() {
+func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Expected a command.")
 		printHelp()

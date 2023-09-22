@@ -58,3 +58,10 @@ func main() {
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 protoc -I=. --go_out=. query_response.proto types.proto transaction.proto && mv github.com/astriaorg/go-sequencer-client/* proto/ && rm -r github.com/
 ```
+
+### CLI
+
+```sh
+go build -o go-sequencer-client-cli ./cmd/main.go
+./go-sequencer-client-cli createaccount
+```
