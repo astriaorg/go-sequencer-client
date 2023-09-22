@@ -32,8 +32,8 @@ func Execute() {
 func printHelp() {
 	fmt.Println("Usage: go-sequencer-client-cli <command>")
 	fmt.Println("Available commands are:")
-	fmt.Println("  createaccount: creates an account")
-	fmt.Println("  getbalance <:    gets the balance of an account")
+	fmt.Println("  createaccount                       : creates an account")
+	fmt.Println("  getbalance <rpc_endpoint> <address> : gets the balance of an account")
 	os.Exit(1)
 }
 
