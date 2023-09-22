@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"os"
+	"time"
 
 	client "github.com/astriaorg/go-sequencer-client/client"
 )
@@ -78,7 +79,10 @@ func handleGetBalance() {
 	var address20 [20]byte
 	copy(address20[:], address)
 
-	balance, err := client.GetBalance(context.Background(), address20)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	balance, err := client.GetBalance(ctx, address20)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
