@@ -52,11 +52,8 @@ func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.Sign
 	}, nil
 }
 
-// Seed returns the private key seed corresponding to private. It is provided for
-// interoperability with RFC 8032. RFC 8032's private keys correspond to seeds
-// in this package.
-func (s *Signer) Seed() []byte {
-	return s.private.Seed()
+func (s *Signer) PrivateKey() ed25519.PrivateKey {
+	return s.private
 }
 
 func (s *Signer) PublicKey() ed25519.PublicKey {

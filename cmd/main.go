@@ -45,7 +45,7 @@ func handleCreateAccount() {
 	}
 	address := signer.Address()
 	fmt.Println("Created account:")
-	fmt.Println("  Private Key:", hex.EncodeToString(signer.Seed()))
+	fmt.Println("  Private Key:", hex.EncodeToString(signer.PrivateKey()))
 	fmt.Println("  Public Key: ", hex.EncodeToString(signer.PublicKey()))
 	fmt.Println("  Address:    ", hex.EncodeToString(address[:]))
 	os.Exit(0)
