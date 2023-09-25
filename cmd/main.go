@@ -38,17 +38,14 @@ func printHelp() {
 }
 
 func handleCreateAccount() {
-	privateKey, err := client.NewAccount()
+	signer, err := client.GenerateSigner()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	// NOTE - creating a Signer to easily get public key and address
-	signer := client.NewSigner(privateKey)
 	address := signer.Address()
 	fmt.Println("Created account:")
-	fmt.Println("  Private Key:", hex.EncodeToString(privateKey.Seed()))
+	fmt.Println("  Private Key:", hex.EncodeToString(signer.Seed()))
 	fmt.Println("  Public Key: ", hex.EncodeToString(signer.PublicKey()))
 	fmt.Println("  Address:    ", hex.EncodeToString(address[:]))
 	os.Exit(0)

@@ -62,6 +62,8 @@ protoc -I=. --go_out=. query_response.proto types.proto transaction.proto && mv 
 ### CLI
 
 ```sh
+# build the binary
 go build -o go-sequencer-client-cli ./cmd/main.go
+# run the binary
 ./go-sequencer-client-cli createaccount
 ```
