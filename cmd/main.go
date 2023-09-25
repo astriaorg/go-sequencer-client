@@ -13,6 +13,7 @@ import (
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Expected a command.")
+		fmt.Println()
 		printHelp()
 		os.Exit(1)
 	}
@@ -22,7 +23,11 @@ func main() {
 		handleCreateAccount()
 	case "getbalance":
 		handleGetBalance()
+	case "help":
+		printHelp()
 	default:
+		fmt.Println("Unknown command.")
+		fmt.Println()
 		printHelp()
 		os.Exit(1)
 	}
@@ -32,10 +37,30 @@ func main() {
 const DEFAULT_RPC_ENDPOINT = "http://localhost:26657"
 
 func printHelp() {
-	fmt.Println("Usage: go-sequencer-client-cli <command>")
-	fmt.Println("Available commands are:")
-	fmt.Println("  createaccount                       : creates an account")
-	fmt.Println("  getbalance <address> [rpc_endpoint] : gets the balance of an account")
+	fmt.Println("Usage: go-sequencer-client-cli <command> [arguments]")
+	fmt.Println()
+	fmt.Println("Available commands:")
+	fmt.Println()
+
+	fmt.Println("  createaccount")
+	fmt.Println("    - Description: Creates account and prints its private key, public key, and address.")
+	fmt.Println("    -------------------------------------")
+	fmt.Println("    - USAGE:")
+	fmt.Println("      createaccount")
+	fmt.Println("    -------------------------------------")
+	fmt.Println()
+
+	fmt.Println("  getbalance")
+	fmt.Println("    - Description: Retrieves and prints the balance of an account.")
+	fmt.Println("    -------------------------------------")
+	fmt.Println("    - USAGE:")
+	fmt.Println("      getbalance <address> [rpc_endpoint]")
+	fmt.Println("      - <address>: The address of the account whose balance you want to retrieve.")
+	fmt.Println("      - [rpc_endpoint]: (Optional) The RPC endpoint to use. If not provided, the default is used.")
+	fmt.Println("        Default: " + DEFAULT_RPC_ENDPOINT)
+	fmt.Println("    -------------------------------------")
+	fmt.Println()
+
 	os.Exit(1)
 }
 
