@@ -29,11 +29,13 @@ func main() {
 
 }
 
+const DEFAULT_RPC_ENDPOINT = "http://localhost:26657"
+
 func printHelp() {
 	fmt.Println("Usage: go-sequencer-client-cli <command>")
 	fmt.Println("Available commands are:")
 	fmt.Println("  createaccount                       : creates an account")
-	fmt.Println("  getbalance <rpc_endpoint> <address> : gets the balance of an account")
+	fmt.Println("  getbalance <address> [rpc_endpoint] : gets the balance of an account")
 	os.Exit(1)
 }
 
@@ -52,21 +54,30 @@ func handleCreateAccount() {
 }
 
 func handleGetBalance() {
-	if len(os.Args) < 4 {
-		fmt.Println("Expected an endpoint and address.")
+	var endpoint, addressHex string
+
+	switch len(os.Args) {
+	case 4:
+		addressHex = os.Args[2]
+		endpoint = os.Args[3]
+		fmt.Println("Using RPC endpoint: ", endpoint)
+	case 3:
+		addressHex = os.Args[2]
+		endpoint = DEFAULT_RPC_ENDPOINT
+		fmt.Println("Using default RPC endpoint: ", DEFAULT_RPC_ENDPOINT)
+	default:
+		fmt.Println("Expected an address.")
 		printHelp()
 		os.Exit(1)
 	}
 
-	endpoint := os.Args[2]
-
-	address, err := hex.DecodeString(os.Args[3])
+	client, err := client.NewClient(endpoint)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	client, err := client.NewClient(endpoint)
+	address, err := hex.DecodeString(addressHex)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
