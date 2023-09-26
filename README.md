@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	client "github.com/astriaorg/go-sequencer-client"
+	client "github.com/astriaorg/go-sequencer-client/client"
 	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 
@@ -57,4 +57,14 @@ func main() {
 ```sh
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 protoc -I=. --go_out=. query_response.proto types.proto transaction.proto && mv github.com/astriaorg/go-sequencer-client/* proto/ && rm -r github.com/
+```
+
+### CLI
+
+```sh
+# build the binary
+go build -o go-sequencer-client-cli ./cmd/main.go
+# run the binary
+./go-sequencer-client-cli createaccount
+./go-sequencer-client-cli getbalance 0f7681a7628cd931e0a036633168a96bb1a5f012 tcp://sequencer.localdev.me:80
 ```

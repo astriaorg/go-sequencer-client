@@ -43,6 +43,10 @@ func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.Sign
 	}, nil
 }
 
+func (s *Signer) PrivateKey() ed25519.PrivateKey {
+	return s.private
+}
+
 func (s *Signer) PublicKey() ed25519.PublicKey {
 	return s.private.Public().(ed25519.PublicKey)
 }
