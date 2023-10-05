@@ -47,7 +47,7 @@ func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.Sign
 // input to generate a private key in the rust implementation, ie:
 // `ed25519_consensus::SigningKey::from(seed)`
 func (s *Signer) Seed() [ed25519.SeedSize]byte {
-	return [ed25519.SeedSize]byte(s.private[0:ed25519.SeedSize])
+	return [ed25519.SeedSize]byte(s.private.Seed())
 }
 
 func (s *Signer) PublicKey() ed25519.PublicKey {
