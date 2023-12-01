@@ -26,7 +26,10 @@ message SignedTransaction {
 message UnsignedTransaction {
     uint32 nonce = 1;
     repeated Action actions = 2;
+    // the asset used to pay the transaction fee
+    bytes fee_asset_id = 3;
 }
+
 
 message Action {
     oneof value {
