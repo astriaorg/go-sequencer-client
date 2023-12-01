@@ -45,6 +45,8 @@ message Action {
 message TransferAction {
     bytes to = 1;
     client.Uint128 amount = 2;
+    // the asset to be transferred
+    bytes asset_id = 3;
 }
 
 // `SequenceAction` represents a transaction destined for another
