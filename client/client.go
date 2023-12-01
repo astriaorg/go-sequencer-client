@@ -11,8 +11,8 @@ import (
 	coretypes "github.com/cometbft/cometbft/rpc/core/types"
 	proto "google.golang.org/protobuf/proto"
 
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 	primproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/primitive/v1"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 )
 
 // Client is an HTTP tendermint client.

@@ -24,7 +24,7 @@ func TestSignAndBroadcastTx(t *testing.T) {
 				Value: &sqproto.Action_SequenceAction{
 					SequenceAction: &sqproto.SequenceAction{
 						RollupId: []byte("test-chain"),
-						Data:    []byte("test-data"),
+						Data:     []byte("test-data"),
 					},
 				},
 			},
