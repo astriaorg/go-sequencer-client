@@ -8,6 +8,12 @@ import (
 	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 )
 
+const DEFAULT_ASTRIA_ASSET = "nria"
+
+var (
+	DefaultAstriaAssetID = sha256.Sum256([]byte(DEFAULT_ASTRIA_ASSET))
+)
+
 type Signer struct {
 	private ed25519.PrivateKey
 }
@@ -30,6 +36,10 @@ func GenerateSigner() (*Signer, error) {
 }
 
 func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.SignedTransaction, error) {
+	if len(tx.FeeAssetId) == 0 {
+		tx.FeeAssetId = DefaultAstriaAssetID[:]
+	}
+
 	bytes, err := proto.Marshal(tx)
 	if err != nil {
 		return nil, err
