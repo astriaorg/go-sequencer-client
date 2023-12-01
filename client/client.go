@@ -11,7 +11,8 @@ import (
 	coretypes "github.com/cometbft/cometbft/rpc/core/types"
 	proto "google.golang.org/protobuf/proto"
 
-	sqproto "github.com/astriaorg/go-sequencer-client/proto"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
+	primproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/primitive/v1"
 )
 
 // Client is an HTTP tendermint client.
@@ -83,7 +84,7 @@ func (c *Client) GetNonce(ctx context.Context, addr [20]byte) (uint32, error) {
 	return nonceResp.Nonce, nil
 }
 
-func protoU128ToBigInt(u128 *sqproto.Uint128) *big.Int {
+func protoU128ToBigInt(u128 *primproto.Uint128) *big.Int {
 	lo := big.NewInt(0).SetUint64(u128.Lo)
 	hi := big.NewInt(0).SetUint64(u128.Hi)
 	hi.Lsh(hi, 64)

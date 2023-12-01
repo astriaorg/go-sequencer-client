@@ -3,9 +3,9 @@ package client
 import (
 	"crypto/ed25519"
 	"crypto/sha256"
-
-	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 	proto "google.golang.org/protobuf/proto"
+
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 )
 
 type Signer struct {

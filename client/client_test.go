@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"testing"
 
-	sqproto "github.com/astriaorg/go-sequencer-client/proto"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 
 	"github.com/stretchr/testify/require"
 )
@@ -23,7 +23,7 @@ func TestSignAndBroadcastTx(t *testing.T) {
 			{
 				Value: &sqproto.Action_SequenceAction{
 					SequenceAction: &sqproto.SequenceAction{
-						ChainId: []byte("test-chain"),
+						RollupId: []byte("test-chain"),
 						Data:    []byte("test-data"),
 					},
 				},
