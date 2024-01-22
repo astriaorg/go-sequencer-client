@@ -8,8 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 	client "github.com/astriaorg/go-sequencer-client/client"
-	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 
 func main() {
@@ -30,8 +30,8 @@ func main() {
 			{
 				Value: &sqproto.Action_SequenceAction{
 					SequenceAction: &sqproto.SequenceAction{
-						ChainId: []byte("test-chain"),
-						Data:    []byte("test-data"),
+						RollupId: []byte("test-chain"),
+						Data:     []byte("test-data"),
 					},
 				},
 			},
