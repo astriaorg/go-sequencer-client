@@ -15,6 +15,12 @@ import (
 	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 )
 
+// Should this live here?
+type BalanceResponse struct {
+	Denom   string   `json:"denom,omitempty"`
+	Balance *big.Int `json:"balance,omitempty"`
+}
+
 // Client is an HTTP tendermint client.
 type Client struct {
 	client *http.HTTP
@@ -40,7 +46,7 @@ func (c *Client) BroadcastTxSync(ctx context.Context, tx *sqproto.SignedTransact
 	return c.client.BroadcastTxSync(ctx, bytes)
 }
 
-func (c *Client) GetBalance(ctx context.Context, addr [20]byte) (*big.Int, error) {
+func (c *Client) GetBalance(ctx context.Context, addr [20]byte) ([]*BalanceResponse, error) {
 	resp, err := c.client.ABCIQueryWithOptions(ctx, fmt.Sprintf("accounts/balance/%x", addr), []byte{}, client.ABCIQueryOptions{
 		Height: 0,
 		Prove:  false,
@@ -53,13 +59,13 @@ func (c *Client) GetBalance(ctx context.Context, addr [20]byte) (*big.Int, error
 		return nil, errors.New(resp.Response.Log)
 	}
 
-	balanceResp := &sqproto.BalanceResponse{}
-	err = proto.Unmarshal(resp.Response.Value, balanceResp)
+	protoBalanceResp := &sqproto.BalanceResponse{}
+	err = proto.Unmarshal(resp.Response.Value, protoBalanceResp)
 	if err != nil {
 		return nil, err
 	}
 
-	return protoU128ToBigInt(balanceResp.Balance), nil
+	return balanceResponseFromProto(protoBalanceResp), nil
 }
 
 func (c *Client) GetNonce(ctx context.Context, addr [20]byte) (uint32, error) {
@@ -89,4 +95,15 @@ func protoU128ToBigInt(u128 *primproto.Uint128) *big.Int {
 	hi := big.NewInt(0).SetUint64(u128.Hi)
 	hi.Lsh(hi, 64)
 	return lo.Add(lo, hi)
+}
+
+func balanceResponseFromProto(resp *sqproto.BalanceResponse) []*BalanceResponse {
+	var balanceResponses []*BalanceResponse
+	for _, balance := range resp.Balances {
+		balanceResponses = append(balanceResponses, &BalanceResponse{
+			Balance: protoU128ToBigInt(balance.Balance),
+			Denom:   balance.Denom,
+		})
+	}
+	return balanceResponses
 }

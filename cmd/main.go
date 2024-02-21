@@ -121,6 +121,10 @@ func handleGetBalance() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Balance:", balance)
+	fmt.Println("Balances:")
+	for _, bal := range balance {
+		fmt.Printf("  %s: %s\n", bal.Denom, bal.Balance.String())
+	}
+
 	os.Exit(0)
 }
