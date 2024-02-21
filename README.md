@@ -6,10 +6,11 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
 	"fmt"
 
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
 	client "github.com/astriaorg/go-sequencer-client/client"
-	sqproto "github.com/astriaorg/go-sequencer-client/proto"
 )
 
 func main() {
@@ -24,14 +25,15 @@ func main() {
 		panic(err)
 	}
 
+	rollupId := sha256.Sum256([]byte("test-chain"))
 	tx := &sqproto.UnsignedTransaction{
 		Nonce: 1,
 		Actions: []*sqproto.Action{
 			{
 				Value: &sqproto.Action_SequenceAction{
 					SequenceAction: &sqproto.SequenceAction{
-						ChainId: []byte("test-chain"),
-						Data:    []byte("test-data"),
+						RollupId: rollupId[:],
+						Data:     []byte("test-data"),
 					},
 				},
 			},
