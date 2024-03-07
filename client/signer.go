@@ -3,6 +3,7 @@ package client
 import (
 	"crypto/ed25519"
 	"crypto/sha256"
+
 	proto "google.golang.org/protobuf/proto"
 
 	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
@@ -36,8 +37,17 @@ func GenerateSigner() (*Signer, error) {
 }
 
 func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.SignedTransaction, error) {
-	if len(tx.FeeAssetId) == 0 {
-		tx.FeeAssetId = DefaultAstriaAssetID[:]
+	for _, action := range tx.Actions {
+		switch v := action.Value.(type) {
+		case *sqproto.Action_TransferAction:
+			if len(v.TransferAction.FeeAssetId) == 0 {
+				v.TransferAction.FeeAssetId = DefaultAstriaAssetID[:]
+			}
+		case *sqproto.Action_SequenceAction:
+			if len(v.SequenceAction.FeeAssetId) == 0 {
+				v.SequenceAction.FeeAssetId = DefaultAstriaAssetID[:]
+			}
+		}
 	}
 
 	bytes, err := proto.Marshal(tx)

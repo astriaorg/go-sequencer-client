@@ -2,7 +2,7 @@ package client
 
 import (
 	"context"
-	"math/big"
+	"crypto/sha256"
 	"testing"
 
 	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
@@ -17,13 +17,14 @@ func TestSignAndBroadcastTx(t *testing.T) {
 	client, err := NewClient("http://localhost:26657")
 	require.NoError(t, err)
 
+	rollupId := sha256.Sum256([]byte("test-chain"))
 	tx := &sqproto.UnsignedTransaction{
 		Nonce: 1,
 		Actions: []*sqproto.Action{
 			{
 				Value: &sqproto.Action_SequenceAction{
 					SequenceAction: &sqproto.SequenceAction{
-						RollupId: []byte("test-chain"),
+						RollupId: rollupId[:],
 						Data:     []byte("test-data"),
 					},
 				},
@@ -43,9 +44,9 @@ func TestGetBalance(t *testing.T) {
 	client, err := NewClient("http://localhost:26657")
 	require.NoError(t, err)
 
-	balance, err := client.GetBalance(context.Background(), [20]byte{})
+	balance, err := client.GetBalances(context.Background(), [20]byte{})
 	require.NoError(t, err)
-	require.Equal(t, balance, big.NewInt(0))
+	require.Empty(t, balance)
 }
 
 func TestGetNonce(t *testing.T) {
