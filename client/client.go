@@ -46,7 +46,7 @@ func (c *Client) BroadcastTxSync(ctx context.Context, tx *sqproto.SignedTransact
 	return c.client.BroadcastTxSync(ctx, bytes)
 }
 
-func (c *Client) GetBalance(ctx context.Context, addr [20]byte) ([]*BalanceResponse, error) {
+func (c *Client) GetBalances(ctx context.Context, addr [20]byte) ([]*BalanceResponse, error) {
 	resp, err := c.client.ABCIQueryWithOptions(ctx, fmt.Sprintf("accounts/balance/%x", addr), []byte{}, client.ABCIQueryOptions{
 		Height: 0,
 		Prove:  false,

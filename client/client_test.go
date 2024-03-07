@@ -44,7 +44,7 @@ func TestGetBalance(t *testing.T) {
 	client, err := NewClient("http://localhost:26657")
 	require.NoError(t, err)
 
-	balance, err := client.GetBalance(context.Background(), [20]byte{})
+	balance, err := client.GetBalances(context.Background(), [20]byte{})
 	require.NoError(t, err)
 	require.Empty(t, balance)
 }
