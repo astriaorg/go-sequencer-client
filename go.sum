@@ -1,13 +1,5 @@
-buf.build/gen/go/astria/astria/protocolbuffers/go v1.32.0-20240307175025-b24dec4bdce2.1 h1:exzc+JJVSVL3CaEgYJGnRQ9TvZjhM/CZt/UtoFvDDMw=
-buf.build/gen/go/astria/astria/protocolbuffers/go v1.32.0-20240307175025-b24dec4bdce2.1/go.mod h1:HTIae3hIWhV69v7f8BJQzr2tP6yd0/gxwLrMiG306RY=
-buf.build/gen/go/cosmos/cosmos-proto/protocolbuffers/go v1.32.0-20211202220400-1935555c206d.1/go.mod h1:GpU2rx3tDDSvCER8/rvvgu6s6LeMU73TKjfBZ89OZKg=
-buf.build/gen/go/cosmos/cosmos-sdk/protocolbuffers/go v1.32.0-20230522115704-e7a85cef453e.1/go.mod h1:J8VpbpzO6pccEOWdLbYylDP8lRPifk2EA8tmJNkdZZo=
-buf.build/gen/go/cosmos/cosmos-sdk/protocolbuffers/go v1.32.0-20230719110346-aa25660f4ff7.1/go.mod h1:Tl9HTTTqDT4kfcsEwfEyUeFdJmbcgSOXL2q50rG5XBw=
-buf.build/gen/go/cosmos/gogo-proto/protocolbuffers/go v1.32.0-20221020125208-34d970b699f8.1/go.mod h1:5GqIYthcy/ASmnKcaT26APpxMhZirnIHXHKki69zjWI=
-buf.build/gen/go/cosmos/gogo-proto/protocolbuffers/go v1.32.0-20230509103710-5e5b9fdd0180.1/go.mod h1:5GqIYthcy/ASmnKcaT26APpxMhZirnIHXHKki69zjWI=
-buf.build/gen/go/cosmos/ibc/protocolbuffers/go v1.32.0-20230913112312-7ab44ae956a0.1/go.mod h1:IPgm3IicGPCXFRfFMLOgHFp3kexNEULuIzEJshSNPcY=
-buf.build/gen/go/cosmos/ics23/protocolbuffers/go v1.32.0-20221207100654-55085f7c710a.1/go.mod h1:pjXPxEgmuc0apOM+/10DC/vWa3di1I0Z+CxwKqRXWYQ=
-buf.build/gen/go/penumbra-zone/penumbra/protocolbuffers/go v1.32.0-20231120132728-bc443669626d.1/go.mod h1:HOI8VDE0aOk+R3EtXPICCUm0pO8D0PSnS7k2fFq2soE=
+buf.build/gen/go/astria/astria/protocolbuffers/go v1.32.0-20240314225002-310b29d1ef86.1 h1:tqubh9diC2bk6BzxO9Obs9KgxvsfTEa0hWKqG9kA45E=
+buf.build/gen/go/astria/astria/protocolbuffers/go v1.32.0-20240314225002-310b29d1ef86.1/go.mod h1:Ma4TsfKTQby0r4gCkdb6D2ThBxTNu0mSVNZF1udF2ko=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=

@@ -6,7 +6,7 @@ import (
 
 	proto "google.golang.org/protobuf/proto"
 
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1"
 )
 
 const DEFAULT_ASTRIA_ASSET = "nria"
