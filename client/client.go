@@ -12,7 +12,7 @@ import (
 	proto "google.golang.org/protobuf/proto"
 
 	primproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/primitive/v1"
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1"
 )
 
 // Should this live here?

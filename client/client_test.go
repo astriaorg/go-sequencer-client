@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"testing"
 
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1alpha1"
+	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1"
 
 	"github.com/stretchr/testify/require"
 )
