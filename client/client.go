@@ -90,14 +90,13 @@ func (c *Client) GetNonce(ctx context.Context, addr [20]byte) (uint32, error) {
 	return nonceResp.Nonce, nil
 }
 
-func (c *Client) GetBlockheight(ctx context.Context) (int64, error) {
+func (c *Client) GetBlockHeight(ctx context.Context) (int64, error) {
 	block, err := c.client.Block(ctx, nil)
 	if err != nil {
 		return 0, err
 	}
 
-	blockheight := block.Block.Height
-	return blockheight, nil
+	return block.Block.Height, nil
 }
 
 func protoU128ToBigInt(u128 *primproto.Uint128) *big.Int {
