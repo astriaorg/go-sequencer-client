@@ -23,6 +23,8 @@ func main() {
 		handleCreateAccount()
 	case "getbalance":
 		handleGetBalance()
+	case "getblockheight":
+		handleGetBlockHeight()
 	case "help":
 		printHelp()
 	default:
@@ -126,5 +128,40 @@ func handleGetBalance() {
 		fmt.Printf("  %s: %s\n", bal.Denom, bal.Balance.String())
 	}
 
+	os.Exit(0)
+}
+
+func handleGetBlockHeight() {
+	var endpoint string
+
+	switch len(os.Args) {
+	case 3:
+		endpoint = os.Args[2]
+		fmt.Println("Using RPC endpoint: ", endpoint)
+	case 2:
+		endpoint = DEFAULT_RPC_ENDPOINT
+		fmt.Println("Using default RPC endpoint: ", endpoint)
+	default:
+		fmt.Println("Expected an endpoint.")
+		printHelp()
+		os.Exit(1)
+	}
+
+	client, err := client.NewClient(endpoint)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	height, err := client.GetBlockheight(ctx)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	fmt.Println("Block height:", height)
 	os.Exit(0)
 }
