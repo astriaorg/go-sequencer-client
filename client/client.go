@@ -11,8 +11,9 @@ import (
 	coretypes "github.com/cometbft/cometbft/rpc/core/types"
 	proto "google.golang.org/protobuf/proto"
 
-	primproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/primitive/v1"
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1"
+	primproto "buf.build/gen/go/astria/primitives/protocolbuffers/go/astria/primitive/v1"
+	accountsproto "buf.build/gen/go/astria/protocol-apis/protocolbuffers/go/astria/protocol/accounts/v1alpha1"
+	txproto "buf.build/gen/go/astria/protocol-apis/protocolbuffers/go/astria/protocol/transactions/v1alpha1"
 )
 
 // Should this live here?
@@ -37,7 +38,7 @@ func NewClient(url string) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) BroadcastTxSync(ctx context.Context, tx *sqproto.SignedTransaction) (*coretypes.ResultBroadcastTx, error) {
+func (c *Client) BroadcastTxSync(ctx context.Context, tx *txproto.SignedTransaction) (*coretypes.ResultBroadcastTx, error) {
 	bytes, err := proto.Marshal(tx)
 	if err != nil {
 		return nil, err
@@ -59,7 +60,7 @@ func (c *Client) GetBalances(ctx context.Context, addr [20]byte) ([]*BalanceResp
 		return nil, errors.New(resp.Response.Log)
 	}
 
-	protoBalanceResp := &sqproto.BalanceResponse{}
+	protoBalanceResp := &accountsproto.BalanceResponse{}
 	err = proto.Unmarshal(resp.Response.Value, protoBalanceResp)
 	if err != nil {
 		return nil, err
@@ -81,7 +82,7 @@ func (c *Client) GetNonce(ctx context.Context, addr [20]byte) (uint32, error) {
 		return 0, errors.New(resp.Response.Log)
 	}
 
-	nonceResp := &sqproto.NonceResponse{}
+	nonceResp := &accountsproto.NonceResponse{}
 	err = proto.Unmarshal(resp.Response.Value, nonceResp)
 	if err != nil {
 		return 0, err
@@ -106,7 +107,7 @@ func protoU128ToBigInt(u128 *primproto.Uint128) *big.Int {
 	return lo.Add(lo, hi)
 }
 
-func balanceResponseFromProto(resp *sqproto.BalanceResponse) []*BalanceResponse {
+func balanceResponseFromProto(resp *accountsproto.BalanceResponse) []*BalanceResponse {
 	var balanceResponses []*BalanceResponse
 	for _, balance := range resp.Balances {
 		balanceResponses = append(balanceResponses, &BalanceResponse{
