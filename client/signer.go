@@ -6,7 +6,7 @@ import (
 
 	proto "google.golang.org/protobuf/proto"
 
-	sqproto "buf.build/gen/go/astria/astria/protocolbuffers/go/astria/sequencer/v1"
+	txproto "buf.build/gen/go/astria/protocol-apis/protocolbuffers/go/astria/protocol/transactions/v1alpha1"
 )
 
 const DEFAULT_ASTRIA_ASSET = "nria"
@@ -36,14 +36,14 @@ func GenerateSigner() (*Signer, error) {
 	}, nil
 }
 
-func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.SignedTransaction, error) {
+func (s *Signer) SignTransaction(tx *txproto.UnsignedTransaction) (*txproto.SignedTransaction, error) {
 	for _, action := range tx.Actions {
 		switch v := action.Value.(type) {
-		case *sqproto.Action_TransferAction:
+		case *txproto.Action_TransferAction:
 			if len(v.TransferAction.FeeAssetId) == 0 {
 				v.TransferAction.FeeAssetId = DefaultAstriaAssetID[:]
 			}
-		case *sqproto.Action_SequenceAction:
+		case *txproto.Action_SequenceAction:
 			if len(v.SequenceAction.FeeAssetId) == 0 {
 				v.SequenceAction.FeeAssetId = DefaultAstriaAssetID[:]
 			}
@@ -56,7 +56,7 @@ func (s *Signer) SignTransaction(tx *sqproto.UnsignedTransaction) (*sqproto.Sign
 	}
 
 	sig := ed25519.Sign(s.private, bytes)
-	return &sqproto.SignedTransaction{
+	return &txproto.SignedTransaction{
 		Transaction: tx,
 		Signature:   sig,
 		PublicKey:   s.private.Public().(ed25519.PublicKey),
