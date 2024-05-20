@@ -3,13 +3,15 @@ module github.com/astriaorg/go-sequencer-client
 go 1.20
 
 require (
-	buf.build/gen/go/astria/astria/protocolbuffers/go v1.32.0-20240314225002-310b29d1ef86.1
+	buf.build/gen/go/astria/astria/protocolbuffers/go v1.34.1-20240417015050-1257bfd50bd3.1
+	buf.build/gen/go/astria/protocol-apis/protocolbuffers/go v1.34.1-20240517150110-b4ffcca70a25.1
 	github.com/cometbft/cometbft v0.37.0
 	github.com/stretchr/testify v1.8.1
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/protobuf v1.34.1
 )
 
 require (
+	buf.build/gen/go/astria/primitives/protocolbuffers/go v1.34.1-20240517150107-e54d335d6779.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
