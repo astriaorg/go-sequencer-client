@@ -4,7 +4,8 @@ import (
 	"crypto/ed25519"
 	"crypto/sha256"
 
-	proto "google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/anypb"
 
 	txproto "buf.build/gen/go/astria/protocol-apis/protocolbuffers/go/astria/protocol/transactions/v1alpha1"
 )
@@ -55,9 +56,14 @@ func (s *Signer) SignTransaction(tx *txproto.UnsignedTransaction) (*txproto.Sign
 		return nil, err
 	}
 
+	transaction := &anypb.Any{
+		TypeUrl: "/astria.protocol.transactions.v1alpha1.UnsignedTransaction",
+		Value:   bytes,
+	}
+
 	sig := ed25519.Sign(s.private, bytes)
 	return &txproto.SignedTransaction{
-		Transaction: tx,
+		Transaction: transaction,
 		Signature:   sig,
 		PublicKey:   s.private.Public().(ed25519.PublicKey),
 	}, nil
