@@ -3,11 +3,11 @@ module github.com/astriaorg/go-sequencer-client
 go 1.20
 
 require (
-	buf.build/gen/go/astria/primitives/protocolbuffers/go v1.33.0-20240422195039-812e347acd6b.1
-	buf.build/gen/go/astria/protocol-apis/protocolbuffers/go v1.33.0-20240423053324-d198e0ffaebe.1
+	buf.build/gen/go/astria/primitives/protocolbuffers/go v1.34.1-20240517150107-e54d335d6779.1
+	buf.build/gen/go/astria/protocol-apis/protocolbuffers/go v1.34.1-20240517150110-b4ffcca70a25.1
 	github.com/cometbft/cometbft v0.38.0
 	github.com/stretchr/testify v1.8.2
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.1
 )
 
 require (
