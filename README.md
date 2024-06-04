@@ -62,4 +62,5 @@ go build -o go-sequencer-client-cli ./cmd/main.go
 # run the binary
 ./go-sequencer-client-cli createaccount
 ./go-sequencer-client-cli getbalance 0f7681a7628cd931e0a036633168a96bb1a5f012 tcp://sequencer.localdev.me:80
+./go-sequencer-client-cli getblock http://localhost:26657 10
 ```

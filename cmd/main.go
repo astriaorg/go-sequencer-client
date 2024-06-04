@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/astriaorg/go-sequencer-client/client"
@@ -25,6 +27,8 @@ func main() {
 		handleGetBalance()
 	case "getblockheight":
 		handleGetBlockHeight()
+	case "getblock":
+		handleGetBlock()
 	case "help":
 		printHelp()
 	default:
@@ -163,5 +167,58 @@ func handleGetBlockHeight() {
 	}
 
 	fmt.Println("Block height :", height)
+	os.Exit(0)
+}
+
+func handleGetBlock() {
+	var endpoint string
+	var height *int64
+
+	switch len(os.Args) {
+	case 4:
+		h, err := strconv.ParseInt(os.Args[3], 10, 64)
+		if err != nil {
+			fmt.Println("Expected a valid height.")
+			printHelp()
+		}
+		height = &h
+		endpoint = os.Args[2]
+		fmt.Println("Using RPC endpoint: ", endpoint)
+		fmt.Println("At height: ", *height)
+	case 3:
+		height = nil
+		endpoint = os.Args[2]
+		fmt.Println("Using RPC endpoint: ", endpoint)
+	case 2:
+		endpoint = DEFAULT_RPC_ENDPOINT
+		fmt.Println("Using default RPC endpoint: ", endpoint)
+	default:
+		fmt.Println("Expected an endpoint.")
+		printHelp()
+		os.Exit(1)
+	}
+
+	client, err := client.NewClient(endpoint)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	block, err := client.GetBlock(ctx, height)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	fmt.Println("Block: ", *height)
+	data, err := json.MarshalIndent(*block, "", "  ")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println(string(data))
 	os.Exit(0)
 }
